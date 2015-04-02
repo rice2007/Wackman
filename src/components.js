@@ -33,6 +33,7 @@ Crafty.c('Actor', {
     },
 });
 
+<<<<<<< HEAD
 // generic initialization method could be made
 
 //Blue
@@ -146,6 +147,16 @@ Crafty.c('bgreen', {
         this.requires('Actor, Solid, bottomgreen');
     },
 });
+=======
+// A Wall is just an Actor with a certain sprite
+Crafty.c('Wall', {
+    init: function () {
+        this.requires('Actor, Solid, spr_wall');
+    },
+});
+
+
+>>>>>>> 63c44eeab2f9820521805daa9f038c55fded5df4
 
 // This is the player-controlled character
 Crafty.c('PlayerCharacter', {
