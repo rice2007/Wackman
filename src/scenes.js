@@ -12,7 +12,6 @@ Crafty.scene('Game', function () {
     }
 
     // Player character, placed at 5, 5 on our grid
-<<<<<<< HEAD
     this.player = Crafty.e('PlayerCharacter').at(1, 1);
     this.occupied[this.player.at().x][this.player.at().y] = true;
     
@@ -135,35 +134,6 @@ Crafty.scene('Game', function () {
     }
     
 
-=======
-    this.player = Crafty.e('PlayerCharacter').at(5, 5);
-    this.occupied[this.player.at().x][this.player.at().y] = true;
-
-    // Place a wall at every edge square on our grid of 16x16 tiles
-    for (var x = 0; x < Game.map_grid.width; x++) {
-        for (var y = 0; y < Game.map_grid.height; y++) {
-            var at_edge = x == 0 || x == Game.map_grid.width - 1 || y == 0 || y == Game.map_grid.height - 1;
-
-            if (at_edge) {
-                // Place a wall entity at the current tile
-                Crafty.e('Wall').at(x, y)
-                this.occupied[x][y] = true;
-            }
-        }
-    }
-
-    // Generate pellets on the map in random locations
-    var max_pellets = 100;
-    for (var x = 0; x < Game.map_grid.width; x++) {
-        for (var y = 0; y < Game.map_grid.height; y++) {
-            if (Math.random() < 0.09) {
-                if (Crafty('Pellet').length < max_pellets && !this.occupied[x][y]) {
-                    Crafty.e('Pellet').at(x, y);
-                }
-            }
-        }
-    }
->>>>>>> 63c44eeab2f9820521805daa9f038c55fded5df4
 
     // Play a ringing sound to indicate the start of the journey
     Crafty.audio.play('ring');
@@ -237,13 +207,9 @@ Crafty.scene('Loading', function () {
     Crafty.load([
   'assets/16x16_forest_2.gif',
   'assets/pacman20.png',
-<<<<<<< HEAD
   'assets/wallsgate.png',
   'assets/door_knock_3x.mp3',
   'assets/pactiles.png',
-=======
-  'assets/door_knock_3x.mp3',
->>>>>>> 63c44eeab2f9820521805daa9f038c55fded5df4
   'assets/door_knock_3x.ogg',
   'assets/door_knock_3x.aac',
   'assets/board_room_applause.mp3',
@@ -260,7 +226,6 @@ Crafty.scene('Loading', function () {
         // These components' names are prefixed with "spr_"
         //  to remind us that they simply cause the entity
         //  to be drawn with a certain sprite
-<<<<<<< HEAD
         
         Crafty.sprite(20, 'assets/wallsgategreen.png', {
 
@@ -291,12 +256,6 @@ Crafty.scene('Loading', function () {
          
         });
     
-=======
-        Crafty.sprite(10, 'assets/pactiles.png', {
-            spr_wall: [4, 0],
-        });
-
->>>>>>> 63c44eeab2f9820521805daa9f038c55fded5df4
         // Define the PC's sprite to be the first sprite in the third row of the
         //  animation sprite map
         Crafty.sprite(20, 'assets/pacman20.png', {
