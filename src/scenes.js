@@ -261,6 +261,8 @@ Crafty.scene('Loading', function () {
         Crafty.sprite(20, 'assets/pacman20.png', {
             spr_player: [12,1],
             spr_pellet: [14, 2],
+            spr_rGhost: [2, 0],
+            spr_bGhost: [0, 0],
         });
 
         // Define our sounds for later use

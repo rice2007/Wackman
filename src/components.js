@@ -240,6 +240,10 @@ Crafty.c('PlayerCharacter', {
     }
 });
 
+//Adding ghost
+
+
+
 // A pellet is a tile on the grid that the PC must visit in order to win the game
 Crafty.c('Pellet', {
     init: function () {
