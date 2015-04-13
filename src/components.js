@@ -1,3 +1,7 @@
+// Defining global ignores for linter
+/*global Crafty*/
+/*global Game*/
+
 // The Grid component allows an element to be located
 //  on a grid of tiles
 Crafty.c('Grid', {
@@ -150,7 +154,7 @@ Crafty.c('bgreen', {
 // This is the player-controlled character
 Crafty.c('PlayerCharacter', {
     init: function () {
-        this.requires('Actor, Multiway, Collision, spr_player, SpriteAnimation')
+        this.requires('Actor, Multiway, Collision, spr_player, SpriteAnimation');
         //            .fourway(2)
         this.multiway(2, {
             UP_ARROW: -90,
@@ -177,11 +181,11 @@ Crafty.c('PlayerCharacter', {
         };
 
 
-        this.animate('PlayerMovingRight', -1)
+        this.animate('PlayerMovingRight', -1);
        // Crafty.trigger("KeyDown", lastKeyEvent)
         // Crafty.trigger("KeyUp", lastKeyEvent)
 
-        Crafty.bind("KeyDown", function (e) {
+        Crafty.bind('KeyDown', function (e) {
 //            Crafty.trigger("KeyDown", lastKeyEvent)
         });
 

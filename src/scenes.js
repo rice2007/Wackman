@@ -1,3 +1,7 @@
+// Defining global ignores for linter
+/*global Crafty*/
+/*global Game*/
+
 // Game scene
 // -------------
 // Runs the core gameplay loop
@@ -18,119 +22,119 @@ Crafty.scene('Game', function () {
     
     // I saw that character maps are often used as a way to place images on a grid
     var map = [];
-    map.push("LwwwwwwwwwswwwwwwwwwX");
-    map.push("DpppppppppDpppppppppD");
-    map.push("DplwwwwwrpbplwwwwwrpD");
-    map.push("DpppppppppppppppppppD");
-    map.push("DplwrptpkmgmeptplwrpD");
-    map.push("DpppppDpppvpppDpppppD");
-    map.push("YwwwXpowrpaplwupLwwwF");
-    map.push("nnnnDpDpppppppDpDnnnn");
-    map.push("wwwwQpbpLrnlXpbpYwwww");
-    map.push("nnnnnpppDnnnDpppnnnnn");
-    map.push("wwwwXptpYwwwFptpLwwww");
-    map.push("nnnnDpDpppppppDpDnnnn");
-    map.push("LwwwQpbplwswrpbpYwwwX");
-    map.push("DpppppppppDpppppppppD");
-    map.push("DpkgmmmmepbpkmmmmgepD");
-    map.push("DppvpppppppppppppvppD");
-    map.push("orpaplwwwwswwwwrpaplu");
-    map.push("DpppppppppDpppppppppD");
-    map.push("DplwwwwwrpbplwwwwwrpD");
-    map.push("DpppppppppppppppppppD");
-    map.push("YwwwwwwwwwwwwwwwwwwwF");
+    map.push('LwwwwwwwwwswwwwwwwwwX');
+    map.push('DpppppppppDpppppppppD');
+    map.push('DplwwwwwrpbplwwwwwrpD');
+    map.push('DpppppppppppppppppppD');
+    map.push('DplwrptpkmgmeptplwrpD');
+    map.push('DpppppDpppvpppDpppppD');
+    map.push('YwwwXpowrpaplwupLwwwF');
+    map.push('nnnnDpDpppppppDpDnnnn');
+    map.push('wwwwQpbpLrnlXpbpYwwww');
+    map.push('nnnnnpppDnnnDpppnnnnn');
+    map.push('wwwwXptpYwwwFptpLwwww');
+    map.push('nnnnDpDpppppppDpDnnnn');
+    map.push('LwwwQpbplwswrpbpYwwwX');
+    map.push('DpppppppppDpppppppppD');
+    map.push('DpkgmmmmepbpkmmmmgepD');
+    map.push('DppvpppppppppppppvppD');
+    map.push('orpaplwwwwswwwwrpaplu');
+    map.push('DpppppppppDpppppppppD');
+    map.push('DplwwwwwrpbplwwwwwrpD');
+    map.push('DpppppppppppppppppppD');
+    map.push('YwwwwwwwwwwwwwwwwwwwF');
     
     for(var y = 0; y <map.length; y++){
         for(var x = 0; x <map[y].length; x++){
             
             var c = map[y].charAt(x);
             
-            if(c == "L"){
-                Crafty.e('tlc').at(x,y)
+            if(c == 'L'){
+                Crafty.e('tlc').at(x,y);
                 this.occupied[x][y] = true;
             } 
-            else if (c == "w"){
-                Crafty.e('hrzntl').at(x, y)
+            else if (c == 'w'){
+                Crafty.e('hrzntl').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "X") {
-                Crafty.e('trc').at(x, y)
+            else if (c == 'X') {
+                Crafty.e('trc').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "D") {
-                Crafty.e('vrtcl').at(x, y)
+            else if (c == 'D') {
+                Crafty.e('vrtcl').at(x, y);
                 this.occupied[x][y] = true;
                 
             }
-            else if (c == "p") {
+            else if (c == 'p') {
                 Crafty.e('Pellet').at(x, y);
             }
-            else if (c == "s"){
-                Crafty.e('splitdown').at(x, y)
+            else if (c == 's'){
+                Crafty.e('splitdown').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "b"){
-                Crafty.e('bottom').at(x, y)
+            else if (c == 'b'){
+                Crafty.e('bottom').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "r"){
-                Crafty.e('rcp').at(x, y)
+            else if (c == 'r'){
+                Crafty.e('rcp').at(x, y);
                 this.occupied[x][y] = true;
                 
             }
-            else if (c == "l"){
-                Crafty.e('lcp').at(x, y)
+            else if (c == 'l'){
+                Crafty.e('lcp').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "g"){
-                Crafty.e('splitdgreen').at(x, y)
+            else if (c == 'g'){
+                Crafty.e('splitdgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "m"){
-                Crafty.e('hgreen').at(x, y)
+            else if (c == 'm'){
+                Crafty.e('hgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "k"){
-                Crafty.e('lcgreen').at(x, y)
+            else if (c == 'k'){
+                Crafty.e('lcgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "e"){
-                Crafty.e('rcgreen').at(x, y)
+            else if (c == 'e'){
+                Crafty.e('rcgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "v"){
-                Crafty.e('vgreen').at(x, y)
+            else if (c == 'v'){
+                Crafty.e('vgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "a"){
-                Crafty.e('bgreen').at(x, y)
+            else if (c == 'a'){
+                Crafty.e('bgreen').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "Y"){
-                Crafty.e('blc').at(x, y)
+            else if (c == 'Y'){
+                Crafty.e('blc').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "Q"){
-                Crafty.e('brc').at(x, y)
+            else if (c == 'Q'){
+                Crafty.e('brc').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "t"){
-                Crafty.e('top').at(x, y)
+            else if (c == 't'){
+                Crafty.e('top').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "o"){
-                Crafty.e('splitright').at(x, y)
+            else if (c == 'o'){
+                Crafty.e('splitright').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "u"){
-                Crafty.e('splitleft').at(x, y)
+            else if (c == 'u'){
+                Crafty.e('splitleft').at(x, y);
                 this.occupied[x][y] = true;
             }
-            else if (c == "F"){
-                Crafty.e('brc').at(x, y)
+            else if (c == 'F'){
+                Crafty.e('brc').at(x, y);
                 this.occupied[x][y] = true;
             }
-      }
+        }
     }
     
 
@@ -205,20 +209,20 @@ Crafty.scene('Loading', function () {
 
     // Load our sprite map image
     Crafty.load([
-  'assets/16x16_forest_2.gif',
-  'assets/pacman20.png',
-  'assets/wallsgate.png',
-  'assets/door_knock_3x.mp3',
-  'assets/pactiles.png',
-  'assets/door_knock_3x.ogg',
-  'assets/door_knock_3x.aac',
-  'assets/board_room_applause.mp3',
-  'assets/board_room_applause.ogg',
-  'assets/board_room_applause.aac',
-  'assets/candy_dish_lid.mp3',
-  'assets/candy_dish_lid.ogg',
-  'assets/candy_dish_lid.aac'
-  ], function () {
+        'assets/16x16_forest_2.gif',
+        'assets/pacman20.png',
+        'assets/wallsgate.png',
+        'assets/door_knock_3x.mp3',
+        'assets/pactiles.png',
+        'assets/door_knock_3x.ogg',
+        'assets/door_knock_3x.aac',
+        'assets/board_room_applause.mp3',
+        'assets/board_room_applause.ogg',
+        'assets/board_room_applause.aac',
+        'assets/candy_dish_lid.mp3',
+        'assets/candy_dish_lid.ogg',
+        'assets/candy_dish_lid.aac'
+        ], function () {
         // Once the images are loaded...
 
         // Define the individual sprites in the image
