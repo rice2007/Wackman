@@ -6,6 +6,7 @@
 // -------------
 // Runs the core gameplay loop
 Crafty.scene('Game', function () {
+        
     // A 2D array to keep track of all occupied tiles
     this.occupied = new Array(Game.map_grid.width);
     for (var i = 0; i < Game.map_grid.width; i++) {
@@ -16,9 +17,15 @@ Crafty.scene('Game', function () {
     }
 
     // Player character, placed at 5, 5 on our grid
-    this.player = Crafty.e('PlayerCharacter').at(1, 1);
+    this.player = Crafty.e('PlayerCharacter').at(10, 15);
     this.occupied[this.player.at().x][this.player.at().y] = true;
-    
+
+
+    // // Red ghost on map
+    this.rg = Crafty.e('RedGhost').at(19, 1);
+    this.occupied[this.rg.at().x][this.rg.at().y] = true;
+
+
     
     // I saw that character maps are often used as a way to place images on a grid
     var map = [];
@@ -137,7 +144,11 @@ Crafty.scene('Game', function () {
         }
     }
     
+    // this.rg = Crafty.e("2D, Canvas, Solid, Grid, spr_rGhost, AI").at(19, 1).moveChance(0.8);
+    // this.occupied[this.rg.at().x][this.rg.at().y] = true;    
 
+    // this.bg = Crafty.e("2D, Canvas, Solid, Grid, spr_bGhost, AI").at(19, 19).moveChance(0.8);
+    // this.occupied[this.bg.at().x][this.bg.at().y] = true;
 
     // Play a ringing sound to indicate the start of the journey
     Crafty.audio.play('ring');
