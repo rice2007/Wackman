@@ -26,7 +26,8 @@ Crafty.c('Grid', {
             });
             return this;
         }
-    }
+    },
+
 });
 
 // An "Actor" is an entity that is drawn in 2D on canvas
@@ -155,7 +156,6 @@ Crafty.c('bgreen', {
 Crafty.c('PlayerCharacter', {
     init: function () {
         this.requires('Actor, Multiway, Collision, spr_player, SpriteAnimation');
-        //            .fourway(2)
         this.multiway(2, {
             UP_ARROW: -90,
             DOWN_ARROW: 90,
@@ -164,6 +164,8 @@ Crafty.c('PlayerCharacter', {
         })
             .stopOnSolids()
             .onHit('Pellet', this.visitPellet)
+            .onHit('Actor', this.die)
+
         // These next lines define our four animations
         //  each call to .animate specifies:
         //  - the name of the animation
@@ -224,7 +226,6 @@ Crafty.c('PlayerCharacter', {
     //  this entity hits an entity with the "Solid" component
     stopOnSolids: function () {
         this.onHit('Solid', this.stopMovement);
-
         return this;
     },
 
@@ -241,192 +242,10 @@ Crafty.c('PlayerCharacter', {
     visitPellet: function (data) {
         villlage = data[0].obj;
         villlage.visit();
-    }
-});
-
-// Crafty.c('BlueGhost', {
-//     init: function () {
-
-//     }
-// })
-
-// Adding ghost
-Crafty.c('RedGhost', {
-    init: function () {
-        this.requires('Actor, Multiway, Collision, spr_rGhost, SpriteAnimation');
-        //            .fourway(2)
-        this.multiway(2, {
-            UP_ARROW: -90,
-            DOWN_ARROW: 90,
-            RIGHT_ARROW: 0,
-            LEFT_ARROW: 180
-        })
-            .stopOnSolids()
-            
-        // These next lines define our four animations
-        //  each call to .animate specifies:
-        //  - the name of the animation
-        //  - the x and y coordinates within the sprite
-        //     map at which the animation set begins
-        //  - the number of animation frames *in addition to* the first one
-        .reel('PlayerMovingUp', 300, 11, 2, 2)
-            .reel('PlayerMovingRight', 300, 11, 1, 2)
-            .reel('PlayerMovingDown', 300, 11, 3, 2)
-            .reel('PlayerMovingLeft', 300, 11, 0, 2);
-        // Watch for a change of direction and switch animations accordingly
-        var animation_speed = 4;
-        var lastKeyEvent = {
-            key: Crafty.keys.RIGHT_ARROW
-        };
-
-
-        this.animate('PlayerMovingRight', -1);
-       // Crafty.trigger("KeyDown", lastKeyEvent)
-        // Crafty.trigger("KeyUp", lastKeyEvent)
-
-        Crafty.bind('KeyDown', function (e) {
-//            Crafty.trigger("KeyDown", lastKeyEvent)
-        });
-
-
-
-
-        this.bind('NewDirection', function (data) {
-            if (data.x > 0) {
-                this.animate('PlayerMovingRight', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.RIGHT_ARROW
-                };
-            } else if (data.x < 0) {
-                this.animate('PlayerMovingLeft', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.LEFT_ARROW
-                };
-            } else if (data.y > 0) {
-                this.animate('PlayerMovingDown', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.DOWN_ARROW
-                };
-            } else if (data.y < 0) {
-                this.animate('PlayerMovingUp', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.UP_ARROW
-                };
-            } else {
-                this.pauseAnimation();
-            }
-        });
-
     },
 
-    // Registers a stop-movement function to be called when
-    //  this entity hits an entity with the "Solid" component
-    stopOnSolids: function () {
-        this.onHit('Solid', this.stopMovement);
-
-        return this;
-    },
-
-    // Stops the movement
-    stopMovement: function () {
-        this._speed = 0;
-        if (this._movement) {
-            this.x -= this._movement.x;
-            this.y -= this._movement.y;
-        }
-    },
-
-});
-
-Crafty.c('BlueGhost', {
-    init: function () {
-        this.requires('Actor, Multiway, Collision, spr_bGhost, SpriteAnimation');
-        //            .fourway(2)
-        this.multiway(2, {
-            UP_ARROW: -90,
-            DOWN_ARROW: 90,
-            RIGHT_ARROW: 0,
-            LEFT_ARROW: 180
-        })
-            .stopOnSolids()
-            .onHit('Pellet', this.visitPellet)
-        // These next lines define our four animations
-        //  each call to .animate specifies:
-        //  - the name of the animation
-        //  - the x and y coordinates within the sprite
-        //     map at which the animation set begins
-        //  - the number of animation frames *in addition to* the first one
-        .reel('PlayerMovingUp', 300, 11, 2, 2)
-            .reel('PlayerMovingRight', 300, 11, 1, 2)
-            .reel('PlayerMovingDown', 300, 11, 3, 2)
-            .reel('PlayerMovingLeft', 300, 11, 0, 2);
-        // Watch for a change of direction and switch animations accordingly
-        var animation_speed = 4;
-        var lastKeyEvent = {
-            key: Crafty.keys.RIGHT_ARROW
-        };
-
-
-        this.animate('PlayerMovingRight', -1);
-       // Crafty.trigger("KeyDown", lastKeyEvent)
-        // Crafty.trigger("KeyUp", lastKeyEvent)
-
-        Crafty.bind('KeyDown', function (e) {
-//            Crafty.trigger("KeyDown", lastKeyEvent)
-        });
-
-
-
-
-        this.bind('NewDirection', function (data) {
-            if (data.x > 0) {
-                this.animate('PlayerMovingRight', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.RIGHT_ARROW
-                };
-            } else if (data.x < 0) {
-                this.animate('PlayerMovingLeft', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.LEFT_ARROW
-                };
-            } else if (data.y > 0) {
-                this.animate('PlayerMovingDown', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.DOWN_ARROW
-                };
-            } else if (data.y < 0) {
-                this.animate('PlayerMovingUp', -1);
-                lastKeyEvent = {
-                    key: Crafty.keys.UP_ARROW
-                };
-            } else {
-                this.pauseAnimation();
-            }
-        });
-
-    },
-
-    // Registers a stop-movement function to be called when
-    //  this entity hits an entity with the "Solid" component
-    stopOnSolids: function () {
-        this.onHit('Solid', this.stopMovement);
-
-        return this;
-    },
-
-    // Stops the movement
-    stopMovement: function () {
-        this._speed = 0;
-        if (this._movement) {
-            this.x -= this._movement.x;
-            this.y -= this._movement.y;
-        }
-    },
-
-    // Respond to this player visiting a pellet
-    visitPellet: function (data) {
-        villlage = data[0].obj;
-        villlage.visit();
+    die: function() {
+        Crafty.scene('Fail');
     }
 });
 
@@ -491,7 +310,7 @@ Crafty.c("Slide", {
   });
 
 Crafty.c("AI",{
-  _directions:  [[0,-1], [0,1], [1,0], [-1,0]],
+  _directions:  ['s', 'e', 'w', 'n'],
   init: function() {
     this._moveChance = 0.5;
     this.requires('Slide');
@@ -524,5 +343,21 @@ Crafty.c('Pellet', {
         this.destroy();
         Crafty.audio.play('knock');
         Crafty.trigger('PelletVisited', this);
+    }
+});
+
+Crafty.c('Ghost', {
+    init: function() {
+        this.requires('Actor');
+    },
+
+    move: function() {
+
+    }
+});
+
+Crafty.c('RedMove', {
+    init: function() {
+        Crafty.rg.move('w', 20);
     }
 });

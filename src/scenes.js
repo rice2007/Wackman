@@ -16,16 +16,17 @@ Crafty.scene('Game', function () {
         }
     }
 
-    // Player character, placed at 5, 5 on our grid
+    // Player character, placed at 10, 15 on our grid
     this.player = Crafty.e('PlayerCharacter').at(10, 15);
     this.occupied[this.player.at().x][this.player.at().y] = true;
 
+    //Red Ghost 
+    this.rg = Crafty.e("Actor, Grid, Collision, spr_rGhost").at(19, 1);
+    this.occupied[this.rg.at().x][this.rg.at().y] = true;    
 
-    // // Red ghost on map
-    this.rg = Crafty.e('RedGhost').at(19, 1);
-    this.occupied[this.rg.at().x][this.rg.at().y] = true;
-
-
+    //Blue Ghost
+    this.bg = Crafty.e("Grid, Ghost, spr_bGhost").at(19, 19);
+    this.occupied[this.bg.at().x][this.bg.at().y] = true;
     
     // I saw that character maps are often used as a way to place images on a grid
     var map = [];
@@ -143,12 +144,8 @@ Crafty.scene('Game', function () {
             }
         }
     }
-    
-    // this.rg = Crafty.e("2D, Canvas, Solid, Grid, spr_rGhost, AI").at(19, 1).moveChance(0.8);
-    // this.occupied[this.rg.at().x][this.rg.at().y] = true;    
+   
 
-    // this.bg = Crafty.e("2D, Canvas, Solid, Grid, spr_bGhost, AI").at(19, 19).moveChance(0.8);
-    // this.occupied[this.bg.at().x][this.bg.at().y] = true;
 
     // Play a ringing sound to indicate the start of the journey
     Crafty.audio.play('ring');
@@ -203,6 +200,42 @@ Crafty.scene('Victory', function () {
     this.unbind('KeyDown', this.restart_game);
 });
 
+// Game Over scene
+// -------------
+// Tells the player when they've lost
+Crafty.scene('Fail', function () {
+    // Display some text in celebration of the victory
+    Crafty.e('2D, DOM, Text')
+        .text('You died!')
+        .attr({
+            x: 0,
+            y: Game.height() / 2 - 24,
+            w: Game.width()
+        })
+        .textFont($text_css);
+
+    // Sad music :(
+    Crafty.audio.play('sad');
+
+    // After a short delay, watch for the player to press a key, then restart
+    // the game when a key is pressed
+    var delay = true;
+    setTimeout(function () {
+        delay = false;
+    }, 5000);
+    this.restart_game = function () {
+        if (!delay) {
+            Crafty.scene('Game');
+        }
+    };
+    Crafty.bind('KeyDown', this.restart_game);
+}, function () {
+    // Remove our event binding from above so that we don't
+    //  end up having multiple redundant event watchers after
+    //  multiple restarts of the game
+    this.unbind('KeyDown', this.restart_game);
+});
+
 // Loading scene
 // -------------
 // Handles the loading of binary assets such as images and audio files
@@ -232,7 +265,7 @@ Crafty.scene('Loading', function () {
         'assets/board_room_applause.aac',
         'assets/candy_dish_lid.mp3',
         'assets/candy_dish_lid.ogg',
-        'assets/candy_dish_lid.aac'
+        'assets/candy_dish_lid.aac',
         ], function () {
         // Once the images are loaded...
 
@@ -278,13 +311,18 @@ Crafty.scene('Loading', function () {
             spr_pellet: [14, 2],
             spr_rGhost: [2, 0],
             spr_bGhost: [0, 0],
+            spr_ga: [7, 4],
+            spr_me: [8, 4],
+            spr_ov: [9, 4],
+            spr_er: [10 , 4],
         });
 
         // Define our sounds for later use
         Crafty.audio.add({
             knock: ['assets/door_knock_3x.mp3', 'assets/door_knock_3x.ogg', 'assets/door_knock_3x.aac'],
             applause: ['assets/board_room_applause.mp3', 'assets/board_room_applause.ogg', 'assets/board_room_applause.aac'],
-            ring: ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac']
+            ring: ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac'],
+            sad: ['assets/Sad_Trombone-Joe_Lamb-665429450.mp3']
         });
 
         // Now that our sprites are ready to draw, start the game
