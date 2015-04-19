@@ -171,6 +171,7 @@ Crafty.c('PlayerCharacter', {
      
             .onHit('Pellet', this.visitPellet)
             .onHit('Ghost', this.die)
+			.onHit('Ghost1', this.die)
 
         // These next lines define our four animations
         //  each call to .animate specifies:
