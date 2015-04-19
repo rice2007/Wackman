@@ -245,8 +245,8 @@ Crafty.c('PlayerCharacter', {
     
     tryMove: function (direction) {
         
-        var originalX = this.x,
-            originalY = this.y;
+        var ex = this.x,
+            why = this.y;
 		
         if(direction === Crafty.keys.DOWN_ARROW) {
             this.y += this.speed;   
@@ -265,8 +265,8 @@ Crafty.c('PlayerCharacter', {
 			|| this.hit('bgreen')){
 			
             this.attr({
-			     x: originalX,
-                 y: originalY
+			     x: ex,
+                 y: why
              });
 			
             return false;
@@ -286,7 +286,6 @@ Crafty.c('Ghost', {
     
     speed: 2,
     key: 'l',
-    pos: null,
    
         init: function () {
 			
@@ -316,12 +315,76 @@ Crafty.c('Ghost', {
 					|| this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen')
 					|| this.hit('bgreen')){
 					
-						this.attr({
-							x: originalX,
-                 			y: originalY
-             			});
+					this.attr({
+						x: originalX,
+                 		y: originalY
+             		});
 					
 					var i = Math.random() * 10;
+					
+					if ( i < 3) {
+						this.key = 'r';
+					} else if (i >= 3 && i <=5) {
+						this.key = 'u';	
+					} else if (i > 5 && i < 8) {
+						this.key = 'l';
+					} else if (i >= 8) {
+						this.key = 'd';	
+					}
+						
+				}
+           		
+            });
+	},
+			   
+    getX: function () {
+        return Math.round(this.x / 20);
+    },
+    getY: function () {
+        return Math.round(this.y / 20);   
+    },
+});
+
+Crafty.c('Ghost1', {
+    
+    speed: 2,
+    key: 'l',
+   
+        init: function () {
+			
+            this.requires('2D, Canvas, Grid, Collision, spr_bGhost')
+            .attr({
+                x:20,
+                y:20
+            })
+			.bind("EnterFrame", function() {
+				
+				var originalX = this.x,
+            	originalY = this.y;
+				
+				if(this.key == 'd') {
+					this.y += this.speed;   
+				} else if (this.key == 'u') {
+					this.y -= this.speed;
+				} else if (this.key == 'l') {
+					this.x -= this.speed;
+				} else if (this.key == 'r') {
+					this.x += this.speed;
+				}
+				
+				if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc')
+					|| this.hit('brc') || this.hit('hrzntl') || this.hit ('vrtcl') || this.hit('bcp') || this.hit('tcp')
+					|| this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft')
+					|| this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen')
+					|| this.hit('bgreen')){
+					
+					this.attr({
+						x: originalX,
+                 		y: originalY
+             		});
+					
+					var i = Math.random() * 10;
+					
 					if ( i < 3) {
 						this.key = 'r';
 					} else if (i >= 3 && i <=5) {

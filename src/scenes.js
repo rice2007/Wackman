@@ -22,6 +22,7 @@ Crafty.scene('Game', function () {
     this.occupied[this.player.getX()][this.player.getY()] = true;
 
     this.bg = Crafty.e('Ghost').at(19, 1);
+	this.bg1 = Crafty.e('Ghost1').at(1, 1);
     this.occupied[this.bg.getX()][this.bg.getY()] = true;
     
     // I saw that character maps are often used as a way to place images on a grid
@@ -202,7 +203,7 @@ Crafty.scene('Victory', function () {
 Crafty.scene('Fail', function () {
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
-        .text('You died!')
+        .text('Game Over. Press any key to play again.')
         .attr({
             x: 0,
             y: Game.height() / 2 - 24,
