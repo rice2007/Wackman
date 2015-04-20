@@ -6,6 +6,7 @@
     <script src="src/game.js"></script>
     <script src="src/components.js"></script>
     <script src="src/scenes.js"></script>
+    <script src="lib/jquery-1.11.2.min.js"></script>
     <script>
         window.addEventListener('load', Game.start);
     </script>
@@ -38,6 +39,7 @@
 
     <img src="assets/pac-man-logo1.jpg" alt="Pac" style="width:280px;height:100px">
     <div>
+        <button id="start" onclick="Crafty.scene('Game')">Start</button>
         <p id="highscoreID">Highscore: 0</p>
     </div>
     <div id="cr-stage"></div>
@@ -45,7 +47,5 @@
         <p id="lives">Lives: 3</p>
         <p id="scoreID">Score: 0</p>
     </div>
-
 </body>
-
 </html>

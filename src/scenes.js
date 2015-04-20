@@ -2,6 +2,10 @@
 /*global Crafty*/
 /*global Game*/
 
+
+// function begin () {
+//     Crafty.scene
+// }
 // Game scene
 // -------------
 // Runs the core gameplay loop
@@ -333,9 +337,11 @@ Crafty.scene('Loading', function () {
         sessionStorage.setItem('livesStore', 0);
         sessionStorage.setItem('currentScore', 0);
 
-        // Now that our sprites are ready to draw, start the game
         setTimeout(function () {
-            Crafty.scene('Game');
-        }, 10000);
+            Crafty.scene('Loading');
+        }, Number.MAX_SAFE_INTEGER)
+
+        // Now that our sprites are ready to draw, start the game
+        document.getElementById('start').click(Crafty.scene('Game'));
     });
 });
