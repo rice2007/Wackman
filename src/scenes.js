@@ -8,7 +8,7 @@
 
 //inherits from crafty scene game object
 Crafty.scene('Game', function () {
-        
+
     // A 2D array to keep track of all occupied tiles
     this.occupied = new Array(Game.map_grid.width);
     for (var i = 0; i < Game.map_grid.width; i++) {
@@ -19,19 +19,19 @@ Crafty.scene('Game', function () {
     }
     // pacman, placed at 10, 15 on our grid
     this.player = Crafty.e('PlayerCharacter').at(10, 15);
-    
+
     this.occupied[this.player.getX()][this.player.getY()] = true;
 
     this.bg = Crafty.e('Ghost').at(19, 1);
-	this.bg1 = Crafty.e('Ghost1').at(1, 1);
+    this.bg1 = Crafty.e('Ghost1').at(1, 1);
     this.occupied[this.bg.getX()][this.bg.getY()] = true;
-    
+
     // This is the character map Data structure
-	// that holds all of the information for the map.
-	// The nested for loop below is going to iterate
-	// though each level from left to right in the array below.
-	// Then it is going to decide what Crafty game 
-	// entity/object to create depending on what character it is.
+    // that holds all of the information for the map.
+    // The nested for loop below is going to iterate
+    // though each level from left to right in the array below.
+    // Then it is going to decide what Crafty game 
+    // entity/object to create depending on what character it is.
     var map = [];
     map.push('LwwwwwwwwwswwwwwwwwwX');
     map.push('DpppppppppDpppppppppD');
@@ -54,100 +54,80 @@ Crafty.scene('Game', function () {
     map.push('DplwwwwwrpbplwwwwwrpD');
     map.push('DpppppppppppppppppppD');
     map.push('YwwwwwwwwwwwwwwwwwwwF');
-    
-    for(var y = 0; y <map.length; y++){
-        for(var x = 0; x <map[y].length; x++){
-            
+
+    for (var y = 0; y < map.length; y++) {
+        for (var x = 0; x < map[y].length; x++) {
+
             var c = map[y].charAt(x);
-            
-            if(c == 'L'){
-                Crafty.e('tlc').at(x,y);
+
+            if (c == 'L') {
+                Crafty.e('tlc').at(x, y);
                 this.occupied[x][y] = true;
-            } 
-            else if (c == 'w'){
+            } else if (c == 'w') {
                 Crafty.e('hrzntl').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'X') {
+            } else if (c == 'X') {
                 Crafty.e('trc').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'D') {
+            } else if (c == 'D') {
                 Crafty.e('vrtcl').at(x, y);
                 this.occupied[x][y] = true;
-                
-            }
-            else if (c == 'p') {
+
+            } else if (c == 'p') {
                 Crafty.e('Pellet').at(x, y);
-            }
-            else if (c == 's'){
+            } else if (c == 's') {
                 Crafty.e('splitdown').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'b'){
+            } else if (c == 'b') {
                 Crafty.e('bottom').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'r'){
+            } else if (c == 'r') {
                 Crafty.e('rcp').at(x, y);
                 this.occupied[x][y] = true;
-                
-            }
-            else if (c == 'l'){
+
+            } else if (c == 'l') {
                 Crafty.e('lcp').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'g'){
+            } else if (c == 'g') {
                 Crafty.e('splitdgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'm'){
+            } else if (c == 'm') {
                 Crafty.e('hgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'k'){
+            } else if (c == 'k') {
                 Crafty.e('lcgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'e'){
+            } else if (c == 'e') {
                 Crafty.e('rcgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'v'){
+            } else if (c == 'v') {
                 Crafty.e('vgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'a'){
+            } else if (c == 'a') {
                 Crafty.e('bgreen').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'Y'){
+            } else if (c == 'Y') {
                 Crafty.e('blc').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'Q'){
+            } else if (c == 'Q') {
                 Crafty.e('brc').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 't'){
+            } else if (c == 't') {
                 Crafty.e('top').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'o'){
+            } else if (c == 'o') {
                 Crafty.e('splitright').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'u'){
+            } else if (c == 'u') {
                 Crafty.e('splitleft').at(x, y);
                 this.occupied[x][y] = true;
-            }
-            else if (c == 'F'){
+            } else if (c == 'F') {
                 Crafty.e('brc').at(x, y);
                 this.occupied[x][y] = true;
             }
         }
     }
-   
+
 
 
     // Play a ringing sound to indicate the start of the journey
@@ -171,6 +151,15 @@ Crafty.scene('Game', function () {
 // -------------
 // Tells the player when they've won and lets them start a new game
 Crafty.scene('Victory', function () {
+    // sort the highscore array and display the greatest score
+    highscore.push(score);
+    if (highscore.length > 0) {
+        highscore.sort();
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
+    } else {
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
+    };
+    score = 0; // reset current score
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
         .text('All pellets visited!')
@@ -207,6 +196,15 @@ Crafty.scene('Victory', function () {
 // -------------
 // Tells the player when they've lost
 Crafty.scene('Fail', function () {
+    //sort highscore array and display result
+    highscore.push(score);
+    if (highscore.length > 0) {
+        highscore.sort();
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
+    } else {
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
+    };
+    score = 0; //reset current score to zero
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
         .text('Game Over. Press any key to play again.')
@@ -277,50 +275,50 @@ Crafty.scene('Loading', function () {
         // These components' names are prefixed with "spr_"
         //  to remind us that they simply cause the entity
         //  to be drawn with a certain sprite
-        
-		//have to provide crafty an x y coordinate 
-		//and cell size so it can crop the sprite image out
-		//of the sprite image file.
+
+        //have to provide crafty an x y coordinate 
+        //and cell size so it can crop the sprite image out
+        //of the sprite image file.
         Crafty.sprite(20, 'assets/wallsgategreen.png', {
 
-            splitdowngreen:[4,0],
-            rcapgreen:[0,0],
-            lcapgreen:[1,0],
-            verticalgreen:[8,0],
-            horizontalgreen:[9,0],
-            bottomgreen:[3,0]
-            
+            splitdowngreen: [4, 0],
+            rcapgreen: [0, 0],
+            lcapgreen: [1, 0],
+            verticalgreen: [8, 0],
+            horizontalgreen: [9, 0],
+            bottomgreen: [3, 0]
+
         });
-        
-         
+
+
         Crafty.sprite(20, 'assets/wallsandgatecopy.png', {
-            top_left_corner: [10,0],
+            top_left_corner: [10, 0],
             top_right_corner: [11, 0],
-            bottom_left_corner:[12,0],
-            bottom_right_corner:[13,0],
+            bottom_left_corner: [12, 0],
+            bottom_right_corner: [13, 0],
             horizontal: [9, 0],
-            vertical:[8,0],
-            bottom_cap:[3,0],
-            top_cap:[2,0],
-            r_cap:[0,0],
-            l_cap:[1,0],
-            split_d:[4,0],
-            split_r:[7,0],
-            split_l:[6,0],
-         
+            vertical: [8, 0],
+            bottom_cap: [3, 0],
+            top_cap: [2, 0],
+            r_cap: [0, 0],
+            l_cap: [1, 0],
+            split_d: [4, 0],
+            split_r: [7, 0],
+            split_l: [6, 0],
+
         });
-    
+
         // Define the PC's sprite to be the first sprite in the third row of the
         //  animation sprite map
         Crafty.sprite(20, 'assets/pacman20.png', {
-            spr_player: [12,1],
+            spr_player: [12, 1],
             spr_pellet: [14, 2],
             spr_rGhost: [2, 0],
             spr_bGhost: [0, 0],
             spr_ga: [7, 4],
             spr_me: [8, 4],
             spr_ov: [9, 4],
-            spr_er: [10 , 4],
+            spr_er: [10, 4],
         });
 
         // Define our sounds for later use
