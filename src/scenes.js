@@ -10,6 +10,8 @@
 // -------------
 // Runs the core gameplay loop
 //inherits from crafty scene game object
+
+var highscore = 0;
 Crafty.scene('Game', function () {
     // controls amount of lives left over
     if (sessionStorage.getItem('livesStore') <= 0) {
@@ -153,14 +155,13 @@ Crafty.scene('Game', function () {
 // -------------
 // Tells the player when they've won and lets them start a new game
 Crafty.scene('Victory', function () {
-    // sort the highscore array and display the greatest score sessionStorage.getItem('currentScore')
-    highscore.push(score);
-    if (highscore.length > 0) {
-        highscore.sort();
-        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
-    } else {
-        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
-    };
+    // sort the highscore array and display the greatest score
+    
+    if (highscore < sessionStorage.getItem('currentScore')) {
+        highscore = sessionStorage.getItem('currentScore');
+        sessionStorage.setItem('highscore', highscore);
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
+    }
     score = 0; // reset current score
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
@@ -199,13 +200,11 @@ Crafty.scene('Victory', function () {
 // Tells the player when they've lost
 Crafty.scene('Fail', function () {
     //sort highscore array and display result
-    highscore.push(score);
-    if (highscore.length > 0) {
-        highscore.sort();
-        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
-    } else {
-        document.getElementById("highscoreID").innerHTML = "Highscore: " + highscore[highscore.length - 1];
-    };
+     if (highscore < sessionStorage.getItem('currentScore')) {
+        highscore = sessionStorage.getItem('currentScore');
+        sessionStorage.setItem('highscore', highscore);
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
+    }
     score = 0; //reset current score to zero
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
@@ -243,6 +242,7 @@ Crafty.scene('Fail', function () {
 // -------------
 // Handles the loading of binary assets such as images and audio files
 Crafty.scene('Loading', function () {
+    document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
     // Draw some text for the player to see in case the file
     //  takes a noticeable amount of time to load
     Crafty.e('2D, DOM, Text')
@@ -334,14 +334,20 @@ Crafty.scene('Loading', function () {
         });
 
         // Set lives and score to 0 before beginning
-        sessionStorage.setItem('livesStore', 0);
         sessionStorage.setItem('currentScore', 0);
 
         setTimeout(function () {
             Crafty.scene('Loading');
+            sessionStorage.setItem('livesStore', 0);
         }, Number.MAX_SAFE_INTEGER)
 
         // Now that our sprites are ready to draw, start the game
-        document.getElementById('start').click(Crafty.scene('Game'));
+        document.getElementById('start').click( function () {
+            Crafty.scene('Game');
+        });
     });
 });
+
+var clearHighscore = function () {
+    sessionStorage.setItem('')
+}
