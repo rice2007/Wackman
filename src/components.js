@@ -64,7 +64,6 @@ Crafty.c('trc', {
         this.requires('Actor, Solid, top_right_corner');
     },
 });
-
 Crafty.c('blc', {
     init: function () {
         this.requires('Actor, Solid, bottom_left_corner');
@@ -75,7 +74,6 @@ Crafty.c('brc', {
         this.requires('Actor, Solid, bottom_right_corner');
     },
 });
-
 Crafty.c('hrzntl', {
     init: function () {
         this.requires('Actor, Solid, horizontal');
@@ -91,7 +89,6 @@ Crafty.c('bcp', {
         this.requires('Actor, Solid, bottom_cap');
     },
 });
-
 Crafty.c('tcp', {
     init: function () {
         this.requires('Actor, Solid, top_cap');
@@ -122,7 +119,6 @@ Crafty.c('splitleft', {
         this.requires('Actor, Solid, split_l');
     },
 });
-
 //green
 Crafty.c('splitdgreen', {
     init: function () {
@@ -159,20 +155,18 @@ Crafty.c('bgreen', {
 // pacman inherits from the actor class, collision class, and SpriteAnimation class
 // the spr_player image is passed for the sprite animation to use.
 Crafty.c('PlayerCharacter', {
-
     speed: 2,
     keypressed: Crafty.keys.RIGHT_ARROW,
     direction: null,
 
     init: function () {
-
         //this.requires method show which crafty classes are inherited.
         this.requires('Actor, Collision, spr_player, SpriteAnimation')
             .attr({
                 x: 200,
                 y: 300
             })
-
+ 
         //when pacman with another game object
         //execute the function that is passed as an argument.
         //Onhit method is inherited from the Collision class
@@ -189,7 +183,6 @@ Crafty.c('PlayerCharacter', {
         //until there is an opening in the maze that will allow it to go in that
         //direction
         .bind('KeyDown', function (e) {
-
             if (e.keyCode !== this.direction) {
 
                 if (e.keyCode === Crafty.keys.LEFT_ARROW ||
@@ -200,7 +193,6 @@ Crafty.c('PlayerCharacter', {
                     this.keypressed = e.keyCode;
                 }
             }
-
         })
 
         //Binding the 'enterframe' event to this object was critical
@@ -215,24 +207,18 @@ Crafty.c('PlayerCharacter', {
         //direction.
         //It will continue to go in that direction until another key is pressed. 
         .bind("EnterFrame", function () {
-
             var flag = false;
-
             if (this.keypressed !== null) {
-
                 flag = this.tryMove(this.keypressed);
             }
             //if it hit a wall when trying to turn.. move in the same direction
             //that pacman was moving before it hit the wall.
             if (!flag) {
-
                 flag = this.tryMove(this.direction);
-
             } else {
                 this.direction = this.keypressed;
                 this.keypressed = null;
                 this.update();
-
             }
         });
     },
@@ -285,21 +271,17 @@ Crafty.c('PlayerCharacter', {
             this.x += this.speed;
         }
 
-
         // if pacman hits a wall then change its 
         //(x, y) coordinate back to its original position
         if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc') || this.hit('brc') || this.hit('hrzntl') || this.hit('vrtcl') || this.hit('bcp') || this.hit('tcp') || this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft') || this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen') || this.hit('bgreen')) {
-
             //set pacman's (x, y) attributes to the its orginal (x, y) coordinate
             //before it hit the wall
             this.attr({
                 x: ex,
                 y: why
             });
-
             return false;
         } else {
-
             return true;
         }
     },
@@ -318,22 +300,18 @@ Crafty.c('PlayerCharacter', {
 });
 
 Crafty.c('Ghost', {
-
     speed: 2,
     key: 'l',
 
     init: function () {
-
         this.requires('2D, Canvas, Grid, Collision, spr_bGhost')
             .attr({
                 x: 380,
                 y: 20
             })
-
         //Binding the 'Enterframe' event to the ghost object
         //allows us to add behavior to it 
         .bind("EnterFrame", function () {
-
             var originalX = this.x,
                 originalY = this.y;
 
@@ -349,7 +327,6 @@ Crafty.c('Ghost', {
 
             //Did the ghost hit a wall?
             if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc') || this.hit('brc') || this.hit('hrzntl') || this.hit('vrtcl') || this.hit('bcp') || this.hit('tcp') || this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft') || this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen') || this.hit('bgreen')) {
-
                 //set its (x, y) coordinate back to its original position
                 this.attr({
                     x: originalX,
@@ -361,7 +338,6 @@ Crafty.c('Ghost', {
                 //this.key another value. If that new direction still hits a wall
                 //then this process will be repeated.
                 var i = Math.random() * 10;
-
                 if (i < 3) {
                     this.key = 'r';
                 } else if (i >= 3 && i <= 5) {
@@ -371,9 +347,7 @@ Crafty.c('Ghost', {
                 } else if (i >= 8) {
                     this.key = 'd';
                 }
-
             }
-
         });
     },
 
@@ -386,7 +360,6 @@ Crafty.c('Ghost', {
 });
 
 Crafty.c('Ghost1', {
-
     speed: 2,
     key: 'l',
 
@@ -397,8 +370,8 @@ Crafty.c('Ghost1', {
                 x: 20,
                 y: 20
             })
+            
             .bind("EnterFrame", function () {
-
                 var originalX = this.x,
                     originalY = this.y;
 
@@ -413,14 +386,12 @@ Crafty.c('Ghost1', {
                 }
 
                 if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc') || this.hit('brc') || this.hit('hrzntl') || this.hit('vrtcl') || this.hit('bcp') || this.hit('tcp') || this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft') || this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen') || this.hit('bgreen')) {
-
                     this.attr({
                         x: originalX,
                         y: originalY
                     });
 
                     var i = Math.random() * 10;
-
                     if (i < 3) {
                         this.key = 'r';
                     } else if (i >= 3 && i <= 5) {
@@ -430,9 +401,7 @@ Crafty.c('Ghost1', {
                     } else if (i >= 8) {
                         this.key = 'd';
                     }
-
                 }
-
             });
     },
 
@@ -443,7 +412,6 @@ Crafty.c('Ghost1', {
         return Math.round(this.y / 20);
     },
 });
-
 
 // A pellet is a tile on the grid that the PC must visit in order to win the game
 Crafty.c('Pellet', {

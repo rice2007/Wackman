@@ -23,7 +23,6 @@ Crafty.scene('Game', function () {
     }
     // pacman, placed at 10, 15 on our grid
     this.player = Crafty.e('PlayerCharacter').at(10, 15);
-
     this.occupied[this.player.getX()][this.player.getY()] = true;
 
     this.bg = Crafty.e('Ghost').at(19, 1);
@@ -61,7 +60,6 @@ Crafty.scene('Game', function () {
 
     for (var y = 0; y < map.length; y++) {
         for (var x = 0; x < map[y].length; x++) {
-
             var c = map[y].charAt(x);
 
             if (c == 'L') {
@@ -279,21 +277,19 @@ Crafty.scene('Loading', function () {
         // Define the individual sprites in the image
         // Each one (spr_wall, etc.) becomes a component
         // These components' names are prefixed with "spr_"
-        //  to remind us that they simply cause the entity
-        //  to be drawn with a certain sprite
+        // to remind us that they simply cause the entity
+        // to be drawn with a certain sprite
 
         //have to provide crafty an x y coordinate 
         //and cell size so it can crop the sprite image out
         //of the sprite image file.
         Crafty.sprite(20, 'assets/wallsgategreen.png', {
-
             splitdowngreen: [4, 0],
             rcapgreen: [0, 0],
             lcapgreen: [1, 0],
             verticalgreen: [8, 0],
             horizontalgreen: [9, 0],
             bottomgreen: [3, 0]
-
         });
 
         Crafty.sprite(20, 'assets/wallsandgatecopy.png', {
@@ -310,7 +306,6 @@ Crafty.scene('Loading', function () {
             split_d: [4, 0],
             split_r: [7, 0],
             split_l: [6, 0],
-
         });
 
         // Define the PC's sprite to be the first sprite in the third row of the
@@ -333,6 +328,7 @@ Crafty.scene('Loading', function () {
             ring: ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac'],
             sad: ['assets/Sad_Trombone-Joe_Lamb-665429450.mp3']
         });
+
         // Set lives and score to 0 before beginning
         sessionStorage.setItem('livesStore', 0);
         sessionStorage.setItem('currentScore', 0);
@@ -342,5 +338,4 @@ Crafty.scene('Loading', function () {
             Crafty.scene('Game');
         }, 10000);
     });
-
 });
