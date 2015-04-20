@@ -305,10 +305,14 @@ Crafty.c('PlayerCharacter', {
     },
 
     die: function () {
+        if (sessionStorage.getItem('currentScore') < score) {
+            sessionStorage.setItem('currentScore', score);
+        }
+        score = 0;
         if (sessionStorage.getItem('livesStore') == 0) {
             Crafty.scene('Fail');
         } else {
-            Crafty.scene('Game')
+            Crafty.scene('Game');
         }
     }
 });
@@ -325,7 +329,6 @@ Crafty.c('Ghost', {
                 x: 380,
                 y: 20
             })
-
 
         //Binding the 'Enterframe' event to the ghost object
         //allows us to add behavior to it 

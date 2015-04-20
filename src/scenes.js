@@ -151,7 +151,7 @@ Crafty.scene('Game', function () {
 // -------------
 // Tells the player when they've won and lets them start a new game
 Crafty.scene('Victory', function () {
-    // sort the highscore array and display the greatest score
+    // sort the highscore array and display the greatest score sessionStorage.getItem('currentScore')
     highscore.push(score);
     if (highscore.length > 0) {
         highscore.sort();
@@ -333,8 +333,9 @@ Crafty.scene('Loading', function () {
             ring: ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac'],
             sad: ['assets/Sad_Trombone-Joe_Lamb-665429450.mp3']
         });
-        // Set lives to 0 before beginning
-        sessionStorage.setItem('livesStore', 0)
+        // Set lives and score to 0 before beginning
+        sessionStorage.setItem('livesStore', 0);
+        sessionStorage.setItem('currentScore', 0);
 
         // Now that our sprites are ready to draw, start the game
         setTimeout(function () {
@@ -342,15 +343,4 @@ Crafty.scene('Loading', function () {
         }, 10000);
     });
 
-});
-
-Crafty.scene('Instruction', function () {
-    Crafty.e('2D, DOM, Text')
-        .text('Welcome to Wackman, a wack PacMan clone.')
-        .attr({
-            x: 0,
-            y: Game.height() / 2 - 24,
-            w: Game.width()
-        })
-        .textFont($text_css);
 });
