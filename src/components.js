@@ -286,6 +286,9 @@ Crafty.c('PlayerCharacter', {
         }
     },
 
+    // Stores scores and lives to local storage for accuracy.
+    // Resets score on death.
+    // Loads correct scene in accordance with remaining lives.
     die: function () {
         if (sessionStorage.getItem('currentScore') < score) {
             sessionStorage.setItem('currentScore', score);
