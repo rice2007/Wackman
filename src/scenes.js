@@ -5,6 +5,8 @@
 // Game scene
 // -------------
 // Runs the core gameplay loop
+
+//inherits from crafty scene game object
 Crafty.scene('Game', function () {
         
     // A 2D array to keep track of all occupied tiles
@@ -15,8 +17,7 @@ Crafty.scene('Game', function () {
             this.occupied[i][y] = false;
         }
     }
-    // Player character, placed at 10, 15 on our grid
-	
+    // pacman, placed at 10, 15 on our grid
     this.player = Crafty.e('PlayerCharacter').at(10, 15);
     
     this.occupied[this.player.getX()][this.player.getY()] = true;
@@ -25,7 +26,12 @@ Crafty.scene('Game', function () {
 	this.bg1 = Crafty.e('Ghost1').at(1, 1);
     this.occupied[this.bg.getX()][this.bg.getY()] = true;
     
-    // I saw that character maps are often used as a way to place images on a grid
+    // This is the character map Data structure
+	// that holds all of the information for the map.
+	// The nested for loop below is going to iterate
+	// though each level from left to right in the array below.
+	// Then it is going to decide what Crafty game 
+	// entity/object to create depending on what character it is.
     var map = [];
     map.push('LwwwwwwwwwswwwwwwwwwX');
     map.push('DpppppppppDpppppppppD');
@@ -272,6 +278,9 @@ Crafty.scene('Loading', function () {
         //  to remind us that they simply cause the entity
         //  to be drawn with a certain sprite
         
+		//have to provide crafty an x y coordinate 
+		//and cell size so it can crop the sprite image out
+		//of the sprite image file.
         Crafty.sprite(20, 'assets/wallsgategreen.png', {
 
             splitdowngreen:[4,0],

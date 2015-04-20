@@ -39,10 +39,10 @@ Crafty.c('Actor', {
 });
 
 // generic initialization method could be made
-
-//Blue
-
-
+// each of the following crafty game objects inherit from the actor
+// crafty game object. The Actor game object above inherits from the
+// 2D class, Canvas Class, and Grid Class. Each map piece below inherits from 
+// the solid class additionally.
 Crafty.c('bottom', {
     init: function () {
         this.requires('Actor, Solid, bottom_cap');
@@ -154,7 +154,9 @@ Crafty.c('bgreen', {
     },
 });
 
-// This is the player-controlled character
+// This creates the pacman player
+// pacman inherits from the actor class, collision class, and SpriteAnimation class
+// the spr_player image is passed for the sprite animation to use.
 Crafty.c('PlayerCharacter', {
     
     speed: 2,
@@ -163,23 +165,28 @@ Crafty.c('PlayerCharacter', {
     
         init: function () {
 			
+			//this.requires method show which crafty classes are inherited.
             this.requires('Actor, Collision, spr_player, SpriteAnimation')
             .attr({
                 x:200,
                 y:300
             })
-     
+     		
+			//when pacman with another game object
+			//execute the function that is passed as an argument.
+			//Onhit method is inherited from the Collision class
             .onHit('Pellet', this.visitPellet)
             .onHit('Ghost', this.die)
 			.onHit('Ghost1', this.die)
 
-        // These next lines define our four animations
-        //  each call to .animate specifies:
-        //  - the name of the animation
-        //  - the x and y coordinates within the sprite
-        //     map at which the animation set begins
-        //  - the number of animation frames *in addition to* the first one
-                
+        	//binding the 'keydown' event to this object
+			//needed so the user can control pacman
+        	//saving the button that was pressed into a variable was
+			//critical for smooth navigation.
+			//when an arrow key is pressed it is passed to the trymove function
+			//that function tries to move in the direction of the key was pressed 
+			//until there is an opening in the maze that will allow it to go in that
+			//direction
             .bind('KeyDown', function (e) {
                 
                 if(e.keyCode !== this.direction) {
@@ -194,6 +201,18 @@ Crafty.c('PlayerCharacter', {
                 }
             
             })
+			
+			//Binding the 'enterframe' event to this object was critical
+			//for constant movement.
+			//The function passed to 'bind' is executed continuously, (like a game run loop)
+			//not just when a key is pressed like the 'KeyDown' event above.
+			//Saving the button that was pressed into a variable in the 'KeyDown' event Handler 
+			//allowed much smoother navigation.
+			//When an arrow key is pressed it is passed to the trymove function
+			//that function tries to move pacman in the direction of the key that was pressed 
+			//until there is an opening in the maze that will allow it to go in that
+			//direction.
+			//It will continue to go in that direction until another key is pressed. 
             .bind("EnterFrame", function() {
            
                 var flag = false;
@@ -202,9 +221,11 @@ Crafty.c('PlayerCharacter', {
                     
                     flag = this.tryMove(this.keypressed);
                 }
+				//if it hit a wall when trying to turn.. move in the same direction
+				//that pacman was moving before it hit the wall.
                 if (!flag) {
                     
-                    falg = this.tryMove(this.direction);
+                    flag = this.tryMove(this.direction);
 				    
                 } else {
                     this.direction = this.keypressed;
@@ -219,7 +240,9 @@ Crafty.c('PlayerCharacter', {
         villlage = data[0].obj;
         villlage.visit();
     },
-        
+      
+	// tells the crafty game engine what animation
+	// to play depending on pacman's direction
     update: function () {
         
         if (this.direction === Crafty.keys.DOWN_ARROW) {
@@ -244,27 +267,34 @@ Crafty.c('PlayerCharacter', {
         return Math.round(this.y / 20);   
     },
     
-    tryMove: function (direction) {
+    tryMove: function (d) {
         
         var ex = this.x,
             why = this.y;
 		
-        if(direction === Crafty.keys.DOWN_ARROW) {
+		//update pacamn's (x, y) coordinate
+		// according to the key that was passed.
+        if(d === Crafty.keys.DOWN_ARROW) {
             this.y += this.speed;   
-        } else if (direction === Crafty.keys.UP_ARROW) {
+        } else if (d === Crafty.keys.UP_ARROW) {
             this.y -= this.speed;
-        } else if (direction === Crafty.keys.LEFT_ARROW) {
+        } else if (d === Crafty.keys.LEFT_ARROW) {
             this.x -= this.speed;
-        } else if (direction === Crafty.keys.RIGHT_ARROW) {
+        } else if (d === Crafty.keys.RIGHT_ARROW) {
             this.x += this.speed;
 		}
 		
+		
+		// if pacman hits a wall then change its 
+		//(x, y) coordinate back to its original position
 		if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc')
 			|| this.hit('brc') || this.hit('hrzntl') || this.hit ('vrtcl') || this.hit('bcp') || this.hit('tcp')
 			|| this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft')
 			|| this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen')
 			|| this.hit('bgreen')){
 			
+			//set pacman's (x, y) attributes to the its orginal (x, y) coordinate
+			//before it hit the wall
             this.attr({
 			     x: ex,
                  y: why
@@ -295,6 +325,10 @@ Crafty.c('Ghost', {
                 x:380,
                 y:20
             })
+			
+			
+			//Binding the 'Enterframe' event to the ghost object
+			//allows us to add behavior to it 
 			.bind("EnterFrame", function() {
 				
 				var originalX = this.x,
@@ -310,17 +344,23 @@ Crafty.c('Ghost', {
 					this.x += this.speed;
 				}
 				
+				//Did the ghost hit a wall?
 				if (this.hit('bottom') || this.hit('top') || this.hit('tlc') || this.hit('trc') || this.hit('blc')
 					|| this.hit('brc') || this.hit('hrzntl') || this.hit ('vrtcl') || this.hit('bcp') || this.hit('tcp')
 					|| this.hit('rcp') || this.hit('lcp') || this.hit('splitdown') || this.hit('splitright') || this.hit('splitleft')
 					|| this.hit('splitdgreen') || this.hit('rcgreen') || this.hit('lcgreen') || this.hit('hgreen') || this.hit('vgreen')
 					|| this.hit('bgreen')){
 					
+					//set its (x, y) coordinate back to its original position
 					this.attr({
 						x: originalX,
                  		y: originalY
              		});
 					
+					//when a ghost hits a wall.. Generate a random number between
+					//0 and 10. Test to see what range the number was in and assign 
+					//this.key another value. If that new direction still hits a wall
+					//then this process will be repeated.
 					var i = Math.random() * 10;
 					
 					if ( i < 3) {
