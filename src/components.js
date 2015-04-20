@@ -386,7 +386,7 @@ Crafty.c('Ghost1', {
 
     init: function () {
 
-        this.requires('2D, Canvas, Grid, Collision, spr_bGhost')
+        this.requires('2D, Canvas, Grid, Collision, spr_rGhost')
             .attr({
                 x: 20,
                 y: 20
@@ -452,12 +452,5 @@ Crafty.c('Pellet', {
         document.getElementById("scoreID").innerHTML = "Score: " + score;
         Crafty.audio.play('knock');
         Crafty.trigger('PelletVisited', this);
-    }
-});
-
-
-Crafty.c('RedMove', {
-    init: function () {
-        Crafty.rg.move('w', 20);
     }
 });
