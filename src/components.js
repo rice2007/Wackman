@@ -304,9 +304,12 @@ Crafty.c('PlayerCharacter', {
         }
     },
 
-
     die: function () {
-        Crafty.scene('Fail');
+        if (sessionStorage.getItem('livesStore') == 0) {
+            Crafty.scene('Fail');
+        } else {
+            Crafty.scene('Game')
+        }
     }
 });
 

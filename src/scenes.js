@@ -7,7 +7,12 @@
 // Runs the core gameplay loop
 //inherits from crafty scene game object
 Crafty.scene('Game', function () {
-
+    // controls amount of lives left over
+    if (sessionStorage.getItem('livesStore') <= 0) {
+        sessionStorage.setItem('livesStore', 3)
+    }
+    sessionStorage.setItem('livesStore', sessionStorage.getItem('livesStore') - 1);
+    document.getElementById("lives").innerHTML = "Lives: " + sessionStorage.getItem('livesStore');
     // A 2D array to keep track of all occupied tiles
     this.occupied = new Array(Game.map_grid.width);
     for (var i = 0; i < Game.map_grid.width; i++) {
@@ -126,9 +131,6 @@ Crafty.scene('Game', function () {
             }
         }
     }
-
-
-
     // Play a ringing sound to indicate the start of the journey
     Crafty.audio.play('ring');
 
@@ -144,7 +146,6 @@ Crafty.scene('Game', function () {
     //  multiple restarts of the game
     this.unbind('PelletVisited', this.show_victory);
 });
-
 
 // Victory scene
 // -------------
@@ -332,6 +333,8 @@ Crafty.scene('Loading', function () {
             ring: ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac'],
             sad: ['assets/Sad_Trombone-Joe_Lamb-665429450.mp3']
         });
+        // Set lives to 0 before beginning
+        sessionStorage.setItem('livesStore', 0)
 
         // Now that our sprites are ready to draw, start the game
         setTimeout(function () {
