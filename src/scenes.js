@@ -5,7 +5,6 @@
 // Game scene
 // -------------
 // Runs the core gameplay loop
-
 //inherits from crafty scene game object
 Crafty.scene('Game', function () {
 
@@ -244,7 +243,13 @@ Crafty.scene('Loading', function () {
     // Draw some text for the player to see in case the file
     //  takes a noticeable amount of time to load
     Crafty.e('2D, DOM, Text')
-        .text('Loading; please wait...')
+        .text('Wackman: a wack, PacMan clone.\n' +
+            'Instructions:\n' +
+            'The goal of the game is collect all the pellets.\n' + 
+            'However, there are ghost that will chase you. If they\n' +
+            'touch you, you die!\n\n' +
+            'Ready?\n'+
+            'The game will begin shortly!')
         .attr({
             x: 0,
             y: Game.height() / 2 - 24,
@@ -290,7 +295,6 @@ Crafty.scene('Loading', function () {
 
         });
 
-
         Crafty.sprite(20, 'assets/wallsandgatecopy.png', {
             top_left_corner: [10, 0],
             top_right_corner: [11, 0],
@@ -330,6 +334,20 @@ Crafty.scene('Loading', function () {
         });
 
         // Now that our sprites are ready to draw, start the game
-        Crafty.scene('Game');
+        setTimeout(function () {
+            Crafty.scene('Game');
+        }, 10000);
     });
+
+});
+
+Crafty.scene('Instruction', function () {
+    Crafty.e('2D, DOM, Text')
+        .text('Welcome to Wackman, a wack PacMan clone.')
+        .attr({
+            x: 0,
+            y: Game.height() / 2 - 24,
+            w: Game.width()
+        })
+        .textFont($text_css);
 });
