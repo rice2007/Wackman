@@ -11,8 +11,11 @@
 // Runs the core gameplay loop
 //inherits from crafty scene game object
 
-var highscore = 0;
+
 Crafty.scene('Game', function () {
+    score = 0;
+    sessionStorage.setItem('currentScore', 0);
+    document.getElementById("scoreID").innerHTML = "Score: " + 0;
     // controls amount of lives left over
     if (sessionStorage.getItem('livesStore') <= 0) {
         sessionStorage.setItem('livesStore', 3)
@@ -156,12 +159,8 @@ Crafty.scene('Game', function () {
 // Tells the player when they've won and lets them start a new game
 Crafty.scene('Victory', function () {
     // sort the highscore array and display the greatest score
-    
-    if (highscore < sessionStorage.getItem('currentScore')) {
-        highscore = sessionStorage.getItem('currentScore');
-        sessionStorage.setItem('highscore', highscore);
-        document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
-    }
+    sessionStorage.setItem('highscore', 1870);
+    document.getElementById("highscoreID").innerHTML = "Highscore: " + 1870;
     score = 0; // reset current score
     // Display some text in celebration of the victory
     Crafty.e('2D, DOM, Text')
@@ -200,9 +199,12 @@ Crafty.scene('Victory', function () {
 // Tells the player when they've lost
 Crafty.scene('Fail', function () {
     //sort highscore array and display result
-     if (highscore < sessionStorage.getItem('currentScore')) {
-        highscore = sessionStorage.getItem('currentScore');
-        sessionStorage.setItem('highscore', highscore);
+    if (sessionStorage.getItem('highscore') === null || sessionStorage.getItem('highscore') === undefined || sessionStorage.getItem('highscore') === 0) {
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + score;
+        sessionStorage.setItem('highscore', 0);
+    }
+    if (parseInt(sessionStorage.getItem('highscore')) < parseInt(sessionStorage.getItem('currentScore'))) {
+        sessionStorage.setItem('highscore', sessionStorage.getItem('currentScore'));
         document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
     }
     score = 0; //reset current score to zero
@@ -242,17 +244,21 @@ Crafty.scene('Fail', function () {
 // -------------
 // Handles the loading of binary assets such as images and audio files
 Crafty.scene('Loading', function () {
-    document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
+    if (sessionStorage.getItem('highscore') === null) {
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + 0;
+    } else {
+        document.getElementById("highscoreID").innerHTML = "Highscore: " + sessionStorage.getItem('highscore');
+    }
     // Draw some text for the player to see in case the file
     //  takes a noticeable amount of time to load
     Crafty.e('2D, DOM, Text')
         .text('Wackman: a wack, PacMan clone.\n' +
             'Instructions:\n' +
-            'The goal of the game is collect all the pellets.\n' + 
+            'The goal of the game is collect all the pellets.\n' +
             'However, there are ghost that will chase you. If they\n' +
             'touch you, you die!\n\n' +
-            'Ready?\n'+
-            'The game will begin shortly!')
+            'Ready?\n' +
+            'The game will begin after you click start')
         .attr({
             x: 0,
             y: Game.height() / 2 - 24,
@@ -342,12 +348,13 @@ Crafty.scene('Loading', function () {
         }, Number.MAX_SAFE_INTEGER)
 
         // Now that our sprites are ready to draw, start the game
-        document.getElementById('start').click( function () {
-            Crafty.scene('Game');
-        });
+        //        document.getElementById('start').click(function () {
+        //            Crafty.scene('Game');
+        //        });
     });
 });
 
 var clearHighscore = function () {
-    sessionStorage.setItem('')
+    sessionStorage.setItem('highscore', 0);
+    document.getElementById('highscoreID').innerHTML = "Highscore: " + 0;
 }
